@@ -1,0 +1,94 @@
+<div class="data-grid">
+    <div class="card shadow-sm mx-20">
+        <div class="row">
+            <div class="col-2 titulo-table">
+                <h3>Gestão de Processos</h3>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-1">
+                <button class=" btn btn-secondary form-control form-control-sm p-0 mx-0" (click)="toNovoProcesso()">
+                    <i class="bi bi-plus"></i>
+                    incluir
+                </button>
+            </div>
+            <div class="col-4">
+                <input type="text" [(ngModel)]="filter" class="form-control form-control-sm" placeholder="pesquisa">
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary form-control form-control-sm p-0" (click)="changeFilter()" >pesquisa</button>
+            </div>
+            <div class="col-2">
+                <div class="bg-gray border info-table text-center form-control">
+                    <small class="text-muted">
+                        Página <strong>{{ pageNumber() }}</strong> de <strong>{{ totalPages() }}</strong>
+                        (Total de <strong>{{ totalItems() }}</strong> registros)
+                    </small>
+                </div>
+            </div>
+            <div class="col-3">
+                &nbsp;
+                <select class="btn border" name="size" id="size" (change)="changePageSize($event)">
+                    <option [value]="5">5</option>
+                    <option [value]="10">10</option>
+                    <option [value]="15">15</option>
+                </select>
+                &nbsp;
+                <button class="btn border" (click)="clickPageInicio()">
+                    <i class="bi bi-chevron-double-left"></i>
+                </button>
+                &nbsp;
+                <button class="btn border" >
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                &nbsp;
+                <button class="btn border" (click)="clickAddPage()">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+                &nbsp;
+                <button class="btn border" (click)="clickUltimaPage()">
+                    <i class="bi bi-chevron-double-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0 mt-3">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="text-center w-40">#</th>
+                            <th scope="col">Número</th>
+                            <th scope="col">Classe</th>
+                            <th scope="col">Assunto</th>
+                            <th scope="col">Juiz</th>
+                            <th scope="col">Vara</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of processos(); track item.numeroProcesso) {
+                        <tr>
+                            <td class="text-center w-auto">
+                                <button (click)="visualizarProcesso(item.code)" class="btn btn-sm" tooltip="Visualizar"
+                                    placement="top">
+                                    <i class="bi bi-eye-fill fs-4"></i>
+                                </button>
+                                <button (click)="handleDeleteProcesso(item.code)" class="btn btn-sm" tooltip="Excluir"
+                                    placement="top">
+                                    <i class="bi bi-trash-fill fs-4"></i>
+                                </button>
+                            </td>
+                            <td scope="row">{{item.numeroProcesso}}</td>
+                            <td>{{item.classe}}</td>
+                            <td>{{item.assunto}}</td>
+                            <td>{{item.juiz}}</td>
+                            <td>{{item.vara}}</td>
+                            <td>{{item.estado}}</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

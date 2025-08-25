@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h5 class="modal-title">Cadastrar Advogado</h5>
+  <button type="button" class="btn-close" (click)="fechar()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="mb-3">
+      <label class="form-label">Nome</label>
+      <input type="text" class="form-control" formControlName="nome">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">OAB</label>
+      <input type="text" class="form-control" formControlName="oab">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">E-mail</label>
+      <input type="email" class="form-control" formControlName="email" autocomplete="off">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Celular</label>
+      <input type="text" class="form-control" formControlName="celular">
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="fechar()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="salvar()" [disabled]="form.invalid">
+    <i class="bi bi-plus-lg"></i> Salvar
+  </button>
+</div>

@@ -1,0 +1,181 @@
+<div class="p-4 bg-light rounded shadow-sm formulario">
+    <form [formGroup]="form">
+        <div class="row">
+            <h3 class="text-center">{{title}}</h3>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="numeroProcesso" class="form-label">Número do Processo</label>
+                <input id="numeroProcesso" class="form-control" formControlName="numeroProcesso" />
+            </div>
+            <div class="col-md-6">
+                <label for="classe" class="form-label">Classe</label>
+                <input id="classe" class="form-control" formControlName="classe" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="assunto" class="form-label">Assunto</label>
+            <input id="assunto" class="form-control" formControlName="assunto" />
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="juiz" class="form-label">Juiz</label>
+                <input id="juiz" class="form-control" formControlName="juiz" />
+            </div>
+            <div class="col-md-6">
+                <label for="vara" class="form-label">Vara</label>
+                <input id="vara" class="form-control" formControlName="vara" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="inicioProcesso" class="form-label">Início do Processo</label>
+                <input type="date" id="inicioProcesso" class="form-control" formControlName="inicioProcesso" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select id="estado" name="estado" class="form-select" formControlName="estado">
+                    <option value="">Selecione um estado</option>
+                    <option value="AC">Acre (AC)</option>
+                    <option value="AL">Alagoas (AL)</option>
+                    <option value="AP">Amapá (AP)</option>
+                    <option value="AM">Amazonas (AM)</option>
+                    <option value="BA">Bahia (BA)</option>
+                    <option value="CE">Ceará (CE)</option>
+                    <option value="DF">Distrito Federal (DF)</option>
+                    <option value="ES">Espírito Santo (ES)</option>
+                    <option value="GO">Goiás (GO)</option>
+                    <option value="MA">Maranhão (MA)</option>
+                    <option value="MT">Mato Grosso (MT)</option>
+                    <option value="MS">Mato Grosso do Sul (MS)</option>
+                    <option value="MG">Minas Gerais (MG)</option>
+                    <option value="PA">Pará (PA)</option>
+                    <option value="PB">Paraíba (PB)</option>
+                    <option value="PR">Paraná (PR)</option>
+                    <option value="PE">Pernambuco (PE)</option>
+                    <option value="PI">Piauí (PI)</option>
+                    <option value="RJ">Rio de Janeiro (RJ)</option>
+                    <option value="RN">Rio Grande do Norte (RN)</option>
+                    <option value="RS">Rio Grande do Sul (RS)</option>
+                    <option value="RO">Rondônia (RO)</option>
+                    <option value="RR">Roraima (RR)</option>
+                    <option value="SC">Santa Catarina (SC)</option>
+                    <option value="SP">São Paulo (SP)</option>
+                    <option value="SE">Sergipe (SE)</option>
+                    <option value="TO">Tocantins (TO)</option>
+                </select>
+            </div>
+
+        </div>
+    </form>
+    @if (this.code !== null && this.code !== '') {
+    <div class="row">
+
+        <tabset>
+            <tab heading="Andamentos" id="andamento">
+                <div class="row">
+                    <div class="col-10">
+                        <label for="descricao" class="form-label">Descrição :</label>
+                        <input [(ngModel)]="andamento.descricao" id="descricao" name="descricao" type="text"
+                            class="form-control form-control-sm" autocomplete="off">
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label">&nbsp;</label>
+                        <button (click)="cadastrarAndamento()"
+                            class="btn btn-primary form-control form-control-sm">adicionar</button>
+                    </div>
+                </div>
+                <table class="table table-hover align-middle mb-0 mt-2">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="text-center w-40">#</th>
+                            <th scope="col">Adamentos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of andamentos(); track item.code) {
+                        <tr>
+                            <td>#</td>
+                            <td style="width: 90%;">{{item.descricao}}</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </tab>
+            <tab heading="Partes" id="partes">
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <label class="form-label" for="parte.nome">Nome :</label>
+                        <input id="parte.nome" name="parte.nome" [(ngModel)]="parte.nome" type="text" autocomplete="off"
+                            class="form-control form-control-sm">
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label" for="parte.tipo">Tipo :</label>
+                        <select id="parte.tipo" name="parte.tipo" [(ngModel)]="parte.tipo"
+                            class="form-control form-control-sm">
+                            @for (item of tipos; track item.key) {
+                            <option [ngValue]="item.value">{{item.key}}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <label for="parte.advogadoCode" class="form-label">Advogado :</label>
+                        <div class="input-group">
+                            <select id="parte.advogadoCode" name="parte.advogadoCode" [(ngModel)]="parte.advogadoCode"
+                                class="form-control form-control-sm">
+                                @for (item of advogados(); track item.code) {
+                                <option [value]="item.code">{{item.nome}} - {{item.oab}}</option>
+                                }
+                            </select>
+                            <button class="btn border" (click)="abrirCadastroAdvogado()" type="button"><i class="bi bi-plus-lg"></i></button>
+                        </div>
+
+                    </div>
+                    <div class="col-2">
+                        <label for="form-label">&nbsp;</label>
+                        <button (click)="adicionarParte()"
+                            class="btn btn-primary form-control form-control-sm">adicionar</button>
+                    </div>
+
+                </div>
+                <div>
+                    <table class="table table-hover align-middle mb-0 mt-2">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col" class="text-center w-40">#</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Advogado</th>
+                                <th scope="col">Adicionado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of partes(); track item.nome) {
+                            <tr>
+                                <td>#</td>
+                                <td>{{item.nome}}</td>
+                                <td>{{item.tipo == 1 ? "Autor" : "Reu"}}</td>
+                                <td>{{item.advogado.nome}} - {{item.advogado.oab}}</td>
+                                <td>{{unormalizeDate(item.criadoEm)}}</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+
+    <hr class="mt-5">
+
+    }
+
+    <button type="submit" class="btn btn-primary mx-3" (click)="onSubmit()" [disabled]="form.invalid">Salvar</button>
+
+    <button type="button" class="btn btn-danger" (click)="cancelarCadastro()">Cancelar</button>
+
+</div>

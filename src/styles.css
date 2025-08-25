@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+html {
+    font-size: 10px;
+    min-height: 100vh;
+}
+body {
+    background-color: rgba(128, 128, 128, 0.235);
+    overflow-x: hidden;
+    height: 100%;
+}
+main {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    min-height: calc(500px - 40px);
+}
