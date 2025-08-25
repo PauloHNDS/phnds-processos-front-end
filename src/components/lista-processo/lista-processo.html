@@ -39,7 +39,7 @@
                 </button>
                 &nbsp;
                 <button class="btn border" >
-                    <i class="bi bi-chevron-left"></i>
+                    <i class="bi bi-chevron-left" (click)="clickSubtratcPage()"></i>
                 </button>
                 &nbsp;
                 <button class="btn border" (click)="clickAddPage()">
@@ -66,14 +66,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (item of processos(); track item.numeroProcesso) {
+                        @for (item of processos(); track item.code) {
                         <tr>
                             <td class="text-center w-auto">
                                 <button (click)="visualizarProcesso(item.code)" class="btn btn-sm" tooltip="Visualizar"
                                     placement="top">
                                     <i class="bi bi-eye-fill fs-4"></i>
                                 </button>
-                                <button (click)="handleDeleteProcesso(item.code)" class="btn btn-sm" tooltip="Excluir"
+                                <button (click)="handledeleteProcesso(item.code)" class="btn btn-sm" tooltip="Excluir"
                                     placement="top">
                                     <i class="bi bi-trash-fill fs-4"></i>
                                 </button>

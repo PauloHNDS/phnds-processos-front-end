@@ -23,4 +23,10 @@ export class ParteService {
     })
   }
 
+  public apagarParte(code : string, processoCode : string) : void {
+    this.http.delete<void>(this.baseUrl.concat(`api/parte/${code}`)).subscribe({
+      next: () => this.listaPartes(processoCode ?? "")
+    })
+  }
+
 }

@@ -39,9 +39,9 @@ export class ListaProcesso implements OnInit{
     this.router.navigate([`/vizualizar/${code}`]);
   }
 
-  public handleDeleteProcesso(code: string): void {
+  public handledeleteProcesso(code: string): void {
     
-    const request = this.http.DeleteProcesso(code);
+    const request = this.http.deleteProcesso(code);
 
     request.subscribe({
       next(value) {
@@ -63,6 +63,15 @@ export class ListaProcesso implements OnInit{
 
   public clickPageInicio() : void {
     this.pageNumber.set(1);
+    this.http.listarProcesso(this.pageSize(), this.pageNumber(), this.filter);
+  }
+
+  public clickSubtratcPage() : void {
+    const page =  this.pageNumber() - 1;
+    
+    if(page <= 0) return;
+
+    this.pageNumber.set(page);
     this.http.listarProcesso(this.pageSize(), this.pageNumber(), this.filter);
   }
 

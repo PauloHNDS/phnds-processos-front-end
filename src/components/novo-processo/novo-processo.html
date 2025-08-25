@@ -1,7 +1,13 @@
 <div class="p-4 bg-light rounded shadow-sm formulario">
     <form [formGroup]="form">
         <div class="row">
-            <h3 class="text-center">{{title}}</h3>
+            @if (isUpdate) {
+            <h3 class="text-center">Editar Processo</h3>
+            } @else {
+            <h3 class="text-center">Novo Processo</h3>
+            }
+
+
         </div>
         <div class="row mb-3">
             <div class="col-md-6">
@@ -91,14 +97,19 @@
                 <table class="table table-hover align-middle mb-0 mt-2">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col" class="text-center w-40">#</th>
+                            <th scope="col">#</th>
                             <th scope="col">Adamentos</th>
                         </tr>
                     </thead>
                     <tbody>
                         @for (item of andamentos(); track item.code) {
                         <tr>
-                            <td>#</td>
+                            <td>
+                                <button (click)="handleAndamento(item.code)" class="btn btn-sm" tooltip="Excluir"
+                                    placement="top">
+                                    <i class="bi bi-trash-fill fs-4"></i>
+                                </button>
+                            </td>
                             <td style="width: 90%;">{{item.descricao}}</td>
                         </tr>
                         }
@@ -131,7 +142,8 @@
                                 <option [value]="item.code">{{item.nome}} - {{item.oab}}</option>
                                 }
                             </select>
-                            <button class="btn border" (click)="abrirCadastroAdvogado()" type="button"><i class="bi bi-plus-lg"></i></button>
+                            <button class="btn border" (click)="abrirCadastroAdvogado()" type="button"><i
+                                    class="bi bi-plus-lg"></i></button>
                         </div>
 
                     </div>
@@ -156,7 +168,12 @@
                         <tbody>
                             @for (item of partes(); track item.nome) {
                             <tr>
-                                <td>#</td>
+                                <td>
+                                    <button (click)="handleParte(item.code)" class="btn btn-sm" tooltip="Excluir"
+                                        placement="top">
+                                        <i class="bi bi-trash-fill fs-4"></i>
+                                    </button>
+                                </td>
                                 <td>{{item.nome}}</td>
                                 <td>{{item.tipo == 1 ? "Autor" : "Reu"}}</td>
                                 <td>{{item.advogado.nome}} - {{item.advogado.oab}}</td>
@@ -174,7 +191,12 @@
 
     }
 
+    @if (isUpdate) {
+    <button type="submit" class="btn btn-success mx-3" (click)="onUpdate()" [disabled]="form.invalid">Atualizar</button>
+    } @else {
     <button type="submit" class="btn btn-primary mx-3" (click)="onSubmit()" [disabled]="form.invalid">Salvar</button>
+    }
+
 
     <button type="button" class="btn btn-danger" (click)="cancelarCadastro()">Cancelar</button>
 

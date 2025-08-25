@@ -37,7 +37,6 @@ export class NovoProcesso implements OnInit {
   private parteService = inject(ParteService);
   private advogadoService = inject(AdvogadoService);
 
-
   public form: FormGroup;
   public code: string | null = null;
 
@@ -51,6 +50,7 @@ export class NovoProcesso implements OnInit {
   public advogados = this.advogadoService.advogados;
 
   bsModalRef?: BsModalRef;
+  isUpdate:boolean = false;
 
   constructor() {
 
@@ -97,9 +97,12 @@ export class NovoProcesso implements OnInit {
     this.partes.set([]);
     this.advogados.set([]);
 
-    if (this.code === null || this.code === "") return;
+    if (this.code === null || this.code === "") {
+      this.isUpdate = false;
+      return;
+    } 
 
-    this.title = "Editar Processo";
+    this.isUpdate = true;
 
     this.andamento.processoCode = this.code;
     this.parte.processoCode = this.code;
@@ -122,12 +125,18 @@ export class NovoProcesso implements OnInit {
 
     let processo: ProcessoRequest = this.form.value;
 
-    console.log(processo);
-
-    this.processoService.CadastrarProcesso(processo).subscribe({
+    this.processoService.cadastrarProcesso(processo).subscribe({
       next: (value) => this.handleSucess(value),
       error: (erro) => this.handleError(erro)
     });
+
+  }
+
+  public onUpdate(): void {
+    
+    let processo: ProcessoRequest = this.form.value;
+    
+    this.processoService.atualizarProcesso(processo, this.code ?? "");
 
   }
 
@@ -203,6 +212,13 @@ export class NovoProcesso implements OnInit {
     this.bsModalRef = this.modalService.show(ModalCadatroAdvogado, {
       class: 'modal-lg'
     });
+  }
+
+  public handleAndamento(code : string) : void  {
+    this.andamentoService.apagarAndamento(code,this.code ?? "");
+  }
+  public handleParte(code : string) : void {
+    this.parteService.apagarParte(code, this.code ?? "");
   }
 
 }

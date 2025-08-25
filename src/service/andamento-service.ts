@@ -24,4 +24,12 @@ export class AndamentoService {
       }
     });
   }
+  public apagarAndamento(code : string, processoCode : string) : void {
+    this.http.delete<void>(this.baseUrl.concat(`api/andamento/${code}`)).subscribe({
+      next: () => {
+        this.listaAndamentoPorProcesso(processoCode ?? "");
+      }
+    });
+  }
+
 }
